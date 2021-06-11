@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import Table from "@material-ui/core/Table"
 import TableBody from "@material-ui/core/TableBody"
 import TableCell from "@material-ui/core/TableCell"
@@ -7,13 +7,19 @@ import TableHead from "@material-ui/core/TableHead"
 import TableRow from "@material-ui/core/TableRow"
 import { ICoin } from "../../types/types"
 import { Paper } from "@material-ui/core"
+import { observer } from "mobx-react-lite"
+import currenciesState from '../../store/currenciesState'
 
 interface ICryptoTable {
-    items: ICoin[],
     classes: any,
 }
 
-export const CryptoTable: React.FC<ICryptoTable> = ( { classes, items } ) => {
+export const CryptoTable: React.FC<ICryptoTable> = observer(( { classes } ) => {
+    const items: ICoin[] = currenciesState.getItems()
+
+    useEffect(()=>{
+        currenciesState.fetchItems()
+    },[])
 
     return (
         <TableContainer component={Paper}>
@@ -43,4 +49,4 @@ export const CryptoTable: React.FC<ICryptoTable> = ( { classes, items } ) => {
         </Table>
       </TableContainer>
     )
-}
+})
