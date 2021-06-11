@@ -6,3 +6,12 @@ export interface ICoin {
     volume24: number
   }
   
+  
+export interface ICoinDiff {
+  [key: string]: string
+}
+
+export type ISelectedCoin = {
+  name: string;
+  price: number;
+};
